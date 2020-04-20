@@ -27,6 +27,14 @@ public class Runner {
 		final KafkaStreams streams = new KafkaStreams(topology, props);
 		final CountDownLatch latch = new CountDownLatch(1);
 
+//		KTable<Windowed<String>, Long> sessionizedAggregatedStream = streams
+//				.windowedBy(SessionWindows.with(TimeUnit.MINUTES.toMillis(5)).aggregate(() -> 0L,
+//						(aggKey, newValue, aggValue) -> aggValue + newValue,
+//						(aggKey, leftAggValue, rightAggValue) -> leftAggValue + rightAggValue,
+//						Materialized
+//								.<String, Long, SessionStore<Bytes, byte[]>>as("sessionized-aggregated-stream-store")
+//								.withValueSerde(Serdes.Long())));
+
 		Runtime.getRuntime().addShutdownHook(new Thread("streams-shutdown-hook") {
 			@Override
 			public void run() {
